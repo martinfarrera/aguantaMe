@@ -386,7 +386,7 @@
   function popupMode() {
     const params = new URLSearchParams(location.search), id = params.get('popup') || params.get('aod'); if (!id) return false;
     const aod = params.has('aod'); document.body.className = aod ? 'aod-mode' : 'popup-mode';
-    document.body.innerHTML = `<main class="${aod ? 'aod-shell' : 'popup-shell'}"><div id="popup-name"></div><div id="popup-mode"></div><div id="popup-time" class="popup-time">00:00</div>${aod ? '' : '<div id="popup-current" class="popup-current">Current: 00:00</div><button id="popup-toggle" class="control-btn main">▶</button>'}</main>`;
+    document.body.innerHTML = `<main class="${aod ? 'aod-shell' : 'popup-shell'}"><div class="popup-readout"><div id="popup-name"></div><div id="popup-mode"></div><div id="popup-time" class="popup-time">00:00</div><div id="popup-current" class="popup-current">Current: 00:00</div></div>${aod ? '' : '<div class="popup-controls"><button id="popup-toggle" class="popup-pause" aria-label="Pause timer">Ⅱ</button><button id="popup-switch" class="popup-switch" hidden>Switch</button></div>'}</main>`;
     const tick = () => {
       state = loadState();
       const timer = state.timers.find(item => item.id === id);
@@ -398,7 +398,8 @@
       $('#popup-time').onclick = () => toggleTimer(id);
       if (!aod) {
         $('#popup-current').textContent = `Current: ${fmt(currentElapsed(timer))}`;
-        const button = $('#popup-toggle'); button.textContent = timer.running ? '⏸' : '▶'; button.onclick = () => toggleTimer(id);
+        const button = $('#popup-toggle'); button.textContent = timer.running ? 'Ⅱ' : '▶'; button.setAttribute('aria-label', timer.running ? 'Pause timer' : 'Start timer'); button.onclick = () => toggleTimer(id);
+        const switchButton = $('#popup-switch'); switchButton.hidden = !isSwitch(timer); switchButton.onclick = () => switchTimer(id);
       }
     };
     tick(); setInterval(tick, 250); return true;
