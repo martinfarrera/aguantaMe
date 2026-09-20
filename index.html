@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta name="theme-color" content="#f7f3ef" />
+  <meta name="description" content="Aguantame — your personal focus endurance timers." />
+  <title>Aguantame · Focus endurance</title>
+  <link rel="icon" type="image/png" href="logo_aguantame.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <!-- Replace the brand-mark slot with the official Aguanta.me logo asset when available. -->
+      <a class="brand" href="#timers" aria-label="Aguantame home"><img class="brand-mark brand-logo" data-logo-slot="official-logo" src="logo_aguantame.png" alt="" /><span class="brand-word">aguanta.me</span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-tab active" data-view="timers"><span>⏱</span><span class="nav-label">Timers</span></button>
+        <button class="nav-tab" data-view="dashboard"><span>◔</span><span class="nav-label">Dashboard</span></button>
+      </nav>
+      <button class="icon-btn settings-trigger" id="settings-open" aria-label="Open settings" title="Settings">⚙</button>
+    </header>
+
+    <main>
+      <section id="timers-view" class="view active-view" aria-label="Timers">
+        <div class="hero-row timers-hero-actions">
+          <div class="daily-best" aria-live="polite"><span class="eyebrow">BEST TODAY</span><strong id="daily-best">—</strong></div>
+          <div class="new-timer-actions"><button class="primary-btn" id="add-timer"><span>＋</span> New timer</button><button class="secondary-btn" id="add-switch"><span>⇄</span> New Switch</button></div>
+        </div>
+        <div id="timers-grid" class="timers-grid" aria-live="polite"></div>
+        <div id="empty-state" class="empty-state" hidden><div class="empty-blob">◌</div><h2>Ready when you are</h2><p>Create a timer for whatever deserves your focus.</p><button class="primary-btn" id="empty-add">＋ Create your first timer</button></div>
+      </section>
+
+      <section id="dashboard-view" class="view" aria-labelledby="dashboard-title">
+        <div class="hero-row"><div><p class="eyebrow">THE BIG PICTURE</p><h1 id="dashboard-title">Your journey<span class="accent-dot">.</span></h1><p class="subtitle">Every minute you choose to stay with it counts.</p></div></div>
+        <div class="stats-grid" id="stats-grid"></div>
+        <div class="dashboard-columns"><article class="panel chart-panel"><div class="panel-heading"><h2>Focus over time</h2><span class="muted" id="chart-caption">Last 7 days</span></div><div id="week-chart" class="week-chart"></div></article><article class="panel"><div class="panel-heading"><h2>Recent sessions</h2><span class="muted" id="session-count"></span></div><div id="history-list" class="history-list"></div></article></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="settings-panel" class="settings-panel" aria-hidden="true"><div class="settings-backdrop" data-close-settings></div><aside class="settings-sheet" role="dialog" aria-modal="true" aria-labelledby="settings-title"><div class="sheet-head"><h2 id="settings-title">Settings</h2><button class="icon-btn" id="settings-close" aria-label="Close settings">×</button></div><div class="setting-group"><label class="setting-row"><span><strong>Dark mode</strong><small>Easy on the eyes at night</small></span><input type="checkbox" class="switch" id="theme-toggle"><i></i></label><label class="setting-row"><span><strong>Auto-start white noise</strong><small>Play when any timer starts</small></span><input type="checkbox" class="switch" id="noise-auto"><i></i></label></div><div class="setting-group"><h3>Soundscape</h3><p class="setting-help">Choose your focus atmosphere.</p><div class="sound-options" id="sound-options"><button data-sound="rain" class="sound-option active"><span>🌧️</span><span>Soft rain</span></button><button data-sound="static" class="sound-option"><span>📺</span><span>TV static</span></button><button data-sound="waves" class="sound-option"><span>🌊</span><span>Ocean waves</span></button></div><button class="secondary-btn sound-test" id="sound-test">▶ Preview sound</button></div><div class="setting-group danger-group"><button class="text-btn danger" id="clear-data">Reset all data</button><p class="setting-help">This removes every timer and session from this browser.</p></div></aside></div>
+
+  <div id="toast-region" class="toast-region" aria-live="assertive"></div><div id="celebration-layer" class="celebration-layer" aria-hidden="true"></div>
+  <aside id="mini-window" class="mini-window" hidden aria-label="Floating timer window">
+    <div class="mini-head" id="mini-drag-handle"><strong id="mini-name">Timer</strong><button id="mini-close" aria-label="Close floating timer">×</button></div>
+    <div id="mini-time" class="mini-time">00:00</div><div id="mini-current" class="mini-current">Current: 00:00</div>
+    <button id="mini-toggle" class="control-btn main" aria-label="Pause timer">⏸</button>
+  </aside>
+  <script src="app.js"></script>
+</body>
+</html>
